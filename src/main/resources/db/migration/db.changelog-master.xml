@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet id="1" author="david">
+        <sql>
+            CREATE TABLE IF NOT EXISTS users (
+            id BIGSERIAL PRIMARY KEY,
+            email VARCHAR(255) NOT NULL UNIQUE,
+            password VARCHAR(255) NOT NULL,
+            role VARCHAR(50) NOT NULL
+            );
+
+            CREATE TABLE IF NOT EXISTS cards (
+            id BIGSERIAL PRIMARY KEY,
+            card_number_encrypted VARCHAR(255) NOT NULL,
+            card_number_last4 VARCHAR(4) NOT NULL,
+            owner_name VARCHAR(255) NOT NULL,
+            expiry_date DATE NOT NULL,
+            status VARCHAR(50) NOT NULL,
+            balance DECIMAL(19, 2) NOT NULL,
+            user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>
